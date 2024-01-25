@@ -3,10 +3,8 @@ services:
   backend:
     restart: always
     image: node
-    environment:
-      - MONGO_URL=mongodb://mongodb:27017/overcode
     depends_on:
-      - mongodb
+      - mongo
     build:
       context: ./
       dockerfile: Dockerfile
@@ -29,12 +27,24 @@ services:
       - mynet
     command: sh -c 'npm install && npm install -g @vue/cli && npm run serve'
 
-  mongodb:
+  mongo:
     image: mongo:6-jammy
+    environment:
+      - MONGODB_DATABASE="overcode"
     ports:
-      - '27017:27017'
+      - 27017:27017
     volumes:
       - dbdata6:/data/db
+
+  mongo-express:
+    image: mongo-express
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo
+      - ME_CONFIG_MONGODB_PORT=27017
+    depends_on:
+      - mongo
+    ports:
+      - 8081:8081
 
 networks:
   mynet:

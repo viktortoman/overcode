@@ -1,14 +1,22 @@
-import { Module } from '@nestjs/common';
+import {Logger, Module} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import {MongooseModule} from "@nestjs/mongoose";
-import * as process from "process";
+import {ConfigModule} from "@nestjs/config";
+import mongoose from "mongoose";
 
 @Module({
   imports: [
-      //MongooseModule.forRoot(process.env.MONGODB_URI),
+      ConfigModule.forRoot(),
+      MongooseModule.forRoot(process.env.DATABASE_URL),
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+    constructor() {
+        mongoose.connect(process.env.DATABASE_URL)
+            .then(() => Logger.log('[Database]: Database Connected Successfully'))
+            .catch((err) => console.log(err));
+    }
+}

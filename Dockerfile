@@ -19,4 +19,4 @@ RUN set -eux; \
 
 WORKDIR /app
 
-CMD [ "zsh", "npm", "run", "serve" ]
+CMD [ "zsh" ]
