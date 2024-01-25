@@ -1,0 +1,44 @@
+version: "3.8"
+services:
+  backend:
+    restart: always
+    image: node
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/overcode
+    depends_on:
+      - mongodb
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend/:/app
+    ports:
+      - 3000:3000
+    networks:
+      - mynet
+    command: sh -c 'npm install && npm install -g nodemon && npm run start:dev'
+
+  frontend:
+    restart: always
+    image: node
+    volumes:
+      - ./frontend/:/app
+    ports:
+      - 8080:8080
+    networks:
+      - mynet
+    command: sh -c 'npm install && npm install -g @vue/cli && npm run serve'
+
+  mongodb:
+    image: mongo:6-jammy
+    ports:
+      - '27017:27017'
+    volumes:
+      - dbdata6:/data/db
+
+networks:
+  mynet:
+    driver: bridge
+
+volumes:
+  dbdata6:
