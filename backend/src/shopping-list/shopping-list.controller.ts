@@ -32,7 +32,7 @@ export class ShoppingListController {
         } catch (e) {
             return res.status(HttpStatus.BAD_REQUEST).json({
                 statusCode: HttpStatus.BAD_REQUEST,
-                message: "Error: Shopping Lists not found",
+                message: "Bevásárló lista elem nem található",
             });
         }
     }
@@ -43,13 +43,13 @@ export class ShoppingListController {
         try {
             const shoppingList = await this.shoppingListService.addShoppingList(createShoppingListDTO);
             return res.status(HttpStatus.CREATED).json({
-                message: "Shopping List has been created successfully",
+                message: "Bevásárló lista elem sikeresen létrehozva",
                 data: shoppingList,
             });
         } catch (e) {
             return res.status(HttpStatus.BAD_REQUEST).json({
                 statusCode: HttpStatus.BAD_REQUEST,
-                message: "Error: Shopping List not created",
+                message: "Hiba: Bevásárló lista elem nem hozható létre",
             });
         }
     }
@@ -61,7 +61,7 @@ export class ShoppingListController {
 
             if (!shoppingList) {
                 return res.status(HttpStatus.NOT_FOUND).json({
-                    message: "Shopping List not found",
+                    message: "Bevásárló lista elem nem található",
                 });
             }
 
@@ -71,7 +71,7 @@ export class ShoppingListController {
         } catch (e) {
             return res.status(HttpStatus.BAD_REQUEST).json({
                 statusCode: HttpStatus.BAD_REQUEST,
-                message: "Error: Shopping List not found",
+                message: "Hiba: Bevásárló lista elem nem található",
             });
         }
     }
@@ -89,13 +89,13 @@ export class ShoppingListController {
             }
 
             return res.status(HttpStatus.OK).json({
-                message: "Shopping List has been successfully updated",
+                message: "Bevásárló lista elem sikeresen frissítve",
                 data: shoppingList,
             });
         } catch (e) {
             return res.status(HttpStatus.BAD_REQUEST).json({
                 statusCode: HttpStatus.BAD_REQUEST,
-                message: "Error: Shopping List not updated",
+                message: "Hiba: Bevásárló lista elem nem frissíthető",
             });
         }
     }
@@ -112,13 +112,13 @@ export class ShoppingListController {
             }
 
             return res.status(HttpStatus.OK).json({
-                message: "Shopping List has been successfully deleted",
+                message: "Bevásárló lisat elem sikeresen törölve",
                 data: shoppingList,
             });
         } catch (e) {
             return res.status(HttpStatus.BAD_REQUEST).json({
                 statusCode: HttpStatus.BAD_REQUEST,
-                message: "Error: Shopping List not deleted",
+                message: "Hiba: Bevásárló lista elem nem törölhető",
             });
         }
     }

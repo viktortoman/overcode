@@ -8,7 +8,7 @@ import {UpdateShoppingListDto} from "./dto/update-shopping-list.dto.ts";
 @Injectable()
 export class ShoppingListService {
     constructor(
-        @InjectModel('ShoppingList') private readonly shoppingListModel: Model<ShoppingList>
+        @InjectModel('ShoppingList') private shoppingListModel: Model<ShoppingList>
     ) {}
 
     async getAllShoppingLists(): Promise<ShoppingList[]> {
