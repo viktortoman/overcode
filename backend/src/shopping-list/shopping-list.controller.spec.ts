@@ -89,4 +89,27 @@ describe('ShoppingListController', () => {
             });
         });
     });
+
+    describe('deleteShoppingList', () => {
+        it('should return error response on exception', async () => {
+            // Arrange
+            const mockId = 'mockId';
+            jest.spyOn(service, 'deleteShoppingList').mockRejectedValue(new Error('Some error message'));
+
+            const res = {
+                status: jest.fn().mockReturnThis(),
+                json: jest.fn(),
+            };
+
+            // Act
+            await controller.deleteShoppingList(res as any, mockId);
+
+            // Assert
+            expect(res.status).toHaveBeenCalledWith(HttpStatus.BAD_REQUEST);
+            expect(res.json).toHaveBeenCalledWith({
+                statusCode: HttpStatus.BAD_REQUEST,
+                message: 'Hiba: Bevásárló lista elem nem törölhető',
+            });
+        });
+    });
 });
