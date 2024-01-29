@@ -6,7 +6,7 @@
           <h1 class="text-3xl font-bold">Bevásárló lista</h1>
           <button class="btn btn-primary" @click="createModal.showModal()">Új termék</button>
         </div>
-        <ShoppingListComponent :saved="isSaved" />
+        <ShoppingListComponent :saved="isSaved" :isSavedActionComplete="handleSavedAction" />
       </div>
     </div>
   </div>
@@ -51,13 +51,18 @@ export default {
     const saved = () => {
       document.getElementById('create-modal').close();
       isSaved.value = true;
-      toast.success("Shopping List has been created successfully.", {
+      toast.success("A bevásárló lista elem hozzáadása sikeres.", {
         autoClose: 5000,
       });
     }
 
+    const handleSavedAction = () => {
+      isSaved.value = false;
+    }
+
     return {
       createModal,
+      handleSavedAction,
       saved,
       isSaved
     }

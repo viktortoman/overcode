@@ -4,7 +4,7 @@ services:
     restart: always
     image: node
     depends_on:
-      - mongo
+      - mongodb
     build:
       context: ./
       dockerfile: Dockerfile
@@ -27,24 +27,28 @@ services:
       - mynet
     command: sh -c 'npm install && npm install -g @vue/cli && npm run serve'
 
-  mongo:
+  mongodb:
     image: mongo:6-jammy
+    container_name: mongodb
     environment:
-      - MONGODB_DATABASE="overcode"
+      - MONGODB_DATABASE=overcode
     ports:
       - 27017:27017
     volumes:
       - dbdata6:/data/db
+    networks:
+      - mynet
 
   mongo-express:
     image: mongo-express
     environment:
-      - ME_CONFIG_MONGODB_SERVER=mongo
-      - ME_CONFIG_MONGODB_PORT=27017
+      - ME_CONFIG_MONGODB_SERVER=mongodb
     depends_on:
-      - mongo
+      - mongodb
     ports:
       - 8081:8081
+    networks:
+      - mynet
 
 networks:
   mynet:

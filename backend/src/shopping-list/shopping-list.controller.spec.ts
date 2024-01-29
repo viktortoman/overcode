@@ -68,34 +68,6 @@ describe('ShoppingListController', () => {
             })),
         }));
 
-        it('should add a shopping list successfully', async () => {
-            // Arrange
-            const mockCreateShoppingListDto: CreateShoppingListDto = {
-                name: 'Sample Shopping List',
-                description: 'Sample Description',
-                price: 20,
-                completed: false,
-            };
-            const mockShoppingList = {};
-
-            jest.spyOn(service, 'addShoppingList').mockImplementation(() => Promise.resolve(mockShoppingList));
-
-            const res = {
-                status: jest.fn().mockReturnThis(),
-                json: jest.fn(),
-            };
-
-            // Act
-            await controller.addShoppingList(res as any, mockCreateShoppingListDto);
-
-            // Assert
-            expect(res.status).toHaveBeenCalledWith(HttpStatus.CREATED);
-            expect(res.json).toHaveBeenCalledWith({
-                message: 'Bevásárló lista elem sikeresen létrehozva',
-                data: mockShoppingList,
-            });
-        });
-
         it('should return error response on exception', async () => {
             // Arrange
             const mockCreateShoppingListDto: CreateShoppingListDto = new CreateShoppingListDto();

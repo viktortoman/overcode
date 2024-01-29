@@ -1,6 +1,6 @@
 <script>
 import useShoppingList from "@/composables/shoppingList";
-import {onMounted, onUpdated, ref} from "vue";
+import {onMounted, ref, watch} from "vue";
 import Vue3Datatable from '@bhplugin/vue3-datatable'
 import '@bhplugin/vue3-datatable/dist/style.css'
 
@@ -12,7 +12,9 @@ export default {
   props: {
     saved: {
       type: Boolean,
-      default: false
+    },
+    isSavedActionComplete: {
+      type: Function
     }
   },
   setup(props) {
@@ -28,10 +30,9 @@ export default {
       await getShoppingListItems();
     });
 
-    onUpdated(async () => {
-      if (props.saved) {
-        await getShoppingListItems();
-      }
+    watch(() => props.saved, async () => {
+      await getShoppingListItems();
+      props.isSavedActionComplete();
     });
 
     const completeShoppingListItem = async (id) => {
